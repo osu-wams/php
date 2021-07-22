@@ -33,7 +33,7 @@ jobs:
           context: ./7.4/
           push: ${{ github.event_name != 'pull_request' }}
           target: production
-          tags: osu-wams/php:7.4-apache
+          tags: osuwams/php:7.4-apache
       - 
         name: Build 7 Dev
         id: docker_build_7_dev
@@ -42,7 +42,7 @@ jobs:
           context: ./7.4/
           push: ${{ github.event_name != 'pull_request' }}
           target: development
-          tags: osu-wams/php:7.4-apache-dev
+          tags: osuwams/php:7.4-apache-dev
       - 
         name: Build 8.0
         id: docker_build_8_0
@@ -51,7 +51,7 @@ jobs:
           context: ./8.0/
           push: ${{ github.event_name != 'pull_request' }}
           target: production
-          tags: osu-wams/php:8.0-apache
+          tags: osuwams/php:8.0-apache
       - 
         name: Build 8.0 Dev
         id: docker_build_8_0_dev
@@ -60,4 +60,4 @@ jobs:
           context: ./8.0/
           push: ${{ github.event_name != 'pull_request' }}
           target: development
-          tags: osu-wams/php:8.0-apache-dev
+          tags: osuwams/php:8.0-apache-dev
