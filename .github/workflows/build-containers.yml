@@ -1,0 +1,63 @@
+name: Build Base PHP Containers and deploy to registry
+
+on:
+  schedule:
+    - cron: '0 5 * * *' # everyday at 5am
+  push:
+    branches:
+      - main
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - 
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - 
+        name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build 7
+        id: docker_build_7
+        uses: docker/build-push-action@v2
+        with:
+          context: ./7.4/
+          push: ${{ github.event_name != 'pull_request' }}
+          target: production
+          tags: osu-wams/php:7.4-apache
+      - 
+        name: Build 7 Dev
+        id: docker_build_7_dev
+        uses: docker/build-push-action@v2
+        with:
+          context: ./7.4/
+          push: ${{ github.event_name != 'pull_request' }}
+          target: development
+          tags: osu-wams/php:7.4-apache-dev
+      - 
+        name: Build 8.0
+        id: docker_build_8_0
+        uses: docker/build-push-action@v2
+        with:
+          context: ./8.0/
+          push: ${{ github.event_name != 'pull_request' }}
+          target: production
+          tags: osu-wams/php:8.0-apache
+      - 
+        name: Build 8.0 Dev
+        id: docker_build_8_0_dev
+        uses: docker/build-push-action@v2
+        with:
+          context: ./8.0/
+          push: ${{ github.event_name != 'pull_request' }}
+          target: development
+          tags: osu-wams/php:8.0-apache-dev
