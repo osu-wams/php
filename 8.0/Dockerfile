@@ -61,11 +61,7 @@ RUN { \
 } > /usr/local/etc/php/conf.d/opcache-recommended.ini
 RUN sed -i "s/\/var\/www\/html/\/var\/www\/html\/docroot/" /etc/apache2/sites-available/000-default.conf; \
   chown www-data:www-data /var/www;
-WORKDIR /tmp
-RUN set -eux; \
-  curl https://raw.githubusercontent.com/composer/getcomposer.org/459bcaab2cc03f1656dd7b065d500d0cf3070e3f/web/installer -o composer-setup.php; \
-  php composer-setup.php --install-dir=/usr/local/bin --filename=composer; \
-  rm composer-setup.php;
+COPY --from=docker.io/library/composer /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 CMD [ "apache2-foreground" ]
 
@@ -81,8 +77,10 @@ RUN set -eux; \
   ; \
   yes ' ' | pecl install xdebug; \
   docker-php-ext-enable xdebug; \
-  apt-get clean; \
-  git clone https://github.com/gruvbox-community/gruvbox.git /usr/share/vim/vim81/pack/default/start/gruvbox ; \
+  apt-get clean;
+USER www-data
+RUN set -eux; \
+  git clone https://github.com/gruvbox-community/gruvbox.git ~/.vim/pack/default/start/gruvbox ; \
   { \
     echo 'syntax on'; \
     echo 'set background=dark'; \
@@ -104,5 +102,6 @@ RUN set -eux; \
     echo 'highlight ColorColumn ctermbg=0 guibg=lightgrey'; \
     echo 'colorscheme gruvbox'; \
     echo 'let g:skip_defaults_vim = 1'; \
-    } > /etc/vim/vimrc.local;
+    } > ~/.vimrc;
+WORKDIR /var/www/html
 CMD [ "apache2-foreground" ]

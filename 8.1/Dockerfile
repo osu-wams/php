@@ -1,4 +1,4 @@
-FROM docker.io/library/php:7.4-apache AS production
+FROM docker.io/library/php:8.1-apache AS production
 USER root
 RUN set -eux; \
   if command -v a2enmod; then \
