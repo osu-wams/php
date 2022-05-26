@@ -78,8 +78,11 @@ RUN set -eux; \
   apt-get update; \
   apt-get upgrade -y; \
   apt-get install -y \
-    vim \
+    iproute2 \
+    iputils-ping \
     nano \
+    net-tools \
+    vim \
     wget \
   ; \
   yes ' ' | pecl install xdebug; \
