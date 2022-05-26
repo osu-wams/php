@@ -78,13 +78,23 @@ RUN set -eux; \
   apt-get update; \
   apt-get upgrade -y; \
   apt-get install -y \
-    vim \
+    iproute2 \
+    iputils-ping \
     nano \
+    net-tools \
+    vim \
     wget \
   ; \
   yes ' ' | pecl install xdebug; \
   docker-php-ext-enable xdebug; \
   apt-get clean;
+RUN { \
+    echo 'xdebug.mode=develop,debug'; \
+    echo 'xdebug.discover_client_host=true'; \
+    echo 'xdebug.client_host=host.docker.internal'; \
+    echo 'xdebug.start_with_request=yes'; \
+    echo 'xdebug.idekey=docker'; \
+  } > /usr/local/etc/php/conf.d/xdebug.ini;
 USER www-data
 RUN set -eux; \
   git clone https://github.com/gruvbox-community/gruvbox.git ~/.vim/pack/default/start/gruvbox ; \
