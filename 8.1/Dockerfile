@@ -89,10 +89,8 @@ RUN set -eux; \
   docker-php-ext-enable xdebug; \
   apt-get clean;
 RUN { \
-    echo 'xdebug.mode=develop,debug'; \
     echo 'xdebug.discover_client_host=true'; \
     echo 'xdebug.client_host=host.docker.internal'; \
-    echo 'xdebug.idekey=docker'; \
   } > /usr/local/etc/php/conf.d/xdebug.ini;
 USER www-data
 RUN set -eux; \
