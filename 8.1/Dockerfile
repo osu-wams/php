@@ -14,6 +14,7 @@ RUN set -eux; \
     libmemcached-dev \
     libpng-dev \
     libpq-dev \
+    libtidy-dev \
     libwebp-dev \
     libxpm-dev \
     libzip-dev \
@@ -33,6 +34,7 @@ RUN set -eux; \
     opcache \
     pdo_mysql \
     pdo_pgsql \
+    tidy \
     zip \
   ; \
   apt-mark auto '.*' > /dev/null; \
