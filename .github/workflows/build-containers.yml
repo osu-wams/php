@@ -28,7 +28,7 @@ jobs:
       -
         name: Build 7
         id: docker_build_7
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: ./7.4/
           push: ${{ github.event_name != 'pull_request' }}
@@ -37,7 +37,7 @@ jobs:
       -
         name: Build 7 Dev
         id: docker_build_7_dev
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: ./7.4/
           push: ${{ github.event_name != 'pull_request' }}
@@ -46,7 +46,7 @@ jobs:
       -
         name: Build 8.0
         id: docker_build_8_0
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: ./8.0/
           push: ${{ github.event_name != 'pull_request' }}
@@ -55,7 +55,7 @@ jobs:
       -
         name: Build 8.0 Dev
         id: docker_build_8_0_dev
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: ./8.0/
           push: ${{ github.event_name != 'pull_request' }}
@@ -64,7 +64,7 @@ jobs:
       -
         name: Build 8.1
         id: docker_build_8_1
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: ./8.1/
           push: ${{ github.event_name != 'pull_request' }}
@@ -73,7 +73,7 @@ jobs:
       -
         name: Build 8.1 Dev
         id: docker_build_8_1_dev
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: ./8.1/
           push: ${{ github.event_name != 'pull_request' }}
