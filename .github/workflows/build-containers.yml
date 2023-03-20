@@ -2,7 +2,7 @@ name: Build Base PHP Containers and deploy to registry
 
 on:
   schedule:
-    - cron: '0 5 * * *' # everyday at 5am
+    - cron: '0 5 * * *' # every day at 5am
   push:
     branches:
       - main
@@ -10,72 +10,100 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v3
-      -
-        name: Set up QEMU
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
-      -
-        name: Set up Docker Buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      -
-        name: Login to Docker Hub
+      - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build 7
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build 7
         id: docker_build_7
         uses: docker/build-push-action@v3
         with:
           context: ./7.4/
           push: ${{ github.event_name != 'pull_request' }}
           target: production
-          tags: osuwams/php:7.4-apache
-      -
-        name: Build 7 Dev
+          tags: |
+            osuwams/php:7.4-apache
+            ghcr.io/osu-wams/php:7.4-apache
+      - name: Build 7 Dev
         id: docker_build_7_dev
         uses: docker/build-push-action@v3
         with:
           context: ./7.4/
           push: ${{ github.event_name != 'pull_request' }}
           target: development
-          tags: osuwams/php:7.4-apache-dev
-      -
-        name: Build 8.0
+          tags: |
+            osuwams/php:7.4-apache-dev
+            ghcr.io/osu-wams/php:7.4-apache-dev
+      - name: Build 8.0
         id: docker_build_8_0
         uses: docker/build-push-action@v3
         with:
           context: ./8.0/
           push: ${{ github.event_name != 'pull_request' }}
           target: production
-          tags: osuwams/php:8.0-apache
-      -
-        name: Build 8.0 Dev
+          tags: |
+            osuwams/php:8.0-apache
+            ghcr.io/osu-wams/php:8.0-apache
+      - name: Build 8.0 Dev
         id: docker_build_8_0_dev
         uses: docker/build-push-action@v3
         with:
           context: ./8.0/
           push: ${{ github.event_name != 'pull_request' }}
           target: development
-          tags: osuwams/php:8.0-apache-dev
-      -
-        name: Build 8.1
+          tags: |
+            osuwams/php:8.0-apache-dev
+            ghcr.io/osu-wams/php:8.0-apache-dev
+      - name: Build 8.1
         id: docker_build_8_1
         uses: docker/build-push-action@v3
         with:
           context: ./8.1/
           push: ${{ github.event_name != 'pull_request' }}
           target: production
-          tags: osuwams/php:8.1-apache
-      -
-        name: Build 8.1 Dev
+          tags: | 
+            osuwams/php:8.1-apache
+            ghcr.io/osu-wams/php:8.1-apache
+      - name: Build 8.1 Dev
         id: docker_build_8_1_dev
         uses: docker/build-push-action@v3
         with:
           context: ./8.1/
           push: ${{ github.event_name != 'pull_request' }}
           target: development
-          tags: osuwams/php:8.1-apache-dev
+          tags: |
+            osuwams/php:8.1-apache-dev
+            ghcr.io/osu-wams/php:8.1-apache-dev
+      - name: Build 8.2
+        id: docker_build_8_2
+        uses: docker/build-push-action@v3
+        with:
+          context: ./8.2/
+          push: ${{ github.event_name != 'pull_request' }}
+          target: production
+          tags: |
+            osuwams/php:8.2-apache
+            ghcr.io/osu-wams/php:8.2-apache
+      - name: Build 8.2 Dev
+        id: docker_build_8_2_dev
+        uses: docker/build-push-action@v3
+        with:
+          context: ./8.2/
+          push: ${{ github.event_name != 'pull_request' }}
+          target: development
+          tags: |
+            osuwams/php:8.2-apache-dev
+            ghcr.io/osu-wams/php:8.2-apache-dev
