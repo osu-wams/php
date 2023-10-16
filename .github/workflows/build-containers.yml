@@ -89,7 +89,7 @@ jobs:
             ghcr.io/osu-wams/php:8.1-apache-dev
       - name: Build 8.2
         id: docker_build_8_2
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: ./8.2/
           push: ${{ github.event_name != 'pull_request' }}
@@ -99,7 +99,7 @@ jobs:
             ghcr.io/osu-wams/php:8.2-apache
       - name: Build 8.2 Dev
         id: docker_build_8_2_dev
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: ./8.2/
           push: ${{ github.event_name != 'pull_request' }}
