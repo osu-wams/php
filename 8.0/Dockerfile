@@ -92,6 +92,8 @@ RUN set -eux; \
   docker-php-ext-enable xdebug; \
   apt-get clean;
 RUN { \
+    echo 'xdebug.mode=${PHP_XDEBUG_MODE}'; \
+    echo 'xdebug.idekey=${PHP_XDEBUG_IDEKEY}'; \
     echo 'xdebug.discover_client_host=true'; \
     echo 'xdebug.client_host=host.docker.internal'; \
   } > /usr/local/etc/php/conf.d/xdebug.ini;
