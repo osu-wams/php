@@ -10,6 +10,7 @@ RUN set -eux; \
   # Installing Just Build dependencies
   apt-get install -y --no-install-recommends \
     libfreetype6-dev \
+    libicu-dev \
     libjpeg-dev \
     libmemcached-dev \
     libpng-dev \
@@ -30,6 +31,7 @@ RUN set -eux; \
     memcached \
   ; \
   docker-php-ext-install -j "$(nproc)" \
+    intl \
     gd \
     opcache \
     pdo_mysql \
