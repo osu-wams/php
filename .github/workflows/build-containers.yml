@@ -74,7 +74,7 @@ jobs:
           context: ./8.1/
           push: ${{ github.event_name != 'pull_request' }}
           target: production
-          tags: | 
+          tags: |
             osuwams/php:8.1-apache
             ghcr.io/osu-wams/php:8.1-apache
       - name: Build 8.1 Dev
@@ -107,3 +107,13 @@ jobs:
           tags: |
             osuwams/php:8.2-apache-dev
             ghcr.io/osu-wams/php:8.2-apache-dev
+
+  workflow-keepalive:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - uses: liskin/gh-workflow-keepalive@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
