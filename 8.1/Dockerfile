@@ -99,6 +99,9 @@ RUN { \
     echo 'xdebug.discover_client_host=true'; \
     echo 'xdebug.client_host=host.docker.internal'; \
   } > /usr/local/etc/php/conf.d/xdebug.ini;
+RUN \
+    wget https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 -O /usr/local/bin/mhsendmail; \
+    chmod a+x /usr/local/bin/mhsendmail;
 USER www-data
 RUN set -eux; \
   git clone https://github.com/gruvbox-community/gruvbox.git ~/.vim/pack/default/start/gruvbox ; \
