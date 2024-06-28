@@ -68,6 +68,7 @@ RUN { \
       echo 'max_execution_time = 300'; \
       echo 'max_input_vars = 1500'; \
       echo 'memory_limit = 256M';\
+      echo 'output_buffering=4096'; \
       echo 'post_max_size = 256M'; \
       echo 'upload_max_filesize = 256M'; \
     } > /usr/local/etc/php/conf.d/docker-php-drupal.ini;
