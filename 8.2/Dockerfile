@@ -12,6 +12,7 @@ RUN set -eux; \
     libfreetype6-dev \
     libicu-dev \
     libjpeg-dev \
+    libmagickwand-dev \
     libmemcached-dev \
     libpng-dev \
     libpq-dev \
@@ -20,7 +21,10 @@ RUN set -eux; \
     libxpm-dev \
     libzip-dev \
   ; \
-  yes ' ' | pecl install memcached; \
+  yes ' ' | pecl install \
+    imagick \
+    memcached \
+  ; \
   docker-php-ext-configure gd \
     --with-freetype \
     --with-jpeg \
@@ -28,6 +32,7 @@ RUN set -eux; \
     --with-xpm \
   ; \
   docker-php-ext-enable \
+    imagick \
     memcached \
   ; \
   docker-php-ext-install -j "$(nproc)" \
