@@ -44,8 +44,9 @@ RUN set -eux; \
   # Installing packages we want to keep
   apt-get install -y --no-install-recommends \
     git \
-    unzip \
+    imagemagick \
     mariadb-client \
+    unzip \
   ; \
   ldd "$(php -r 'echo ini_get("extension_dir");')"/*.so \
   | awk '/=>/ { so = $(NF-1); if (index(so, "/usr/local/") == 1) { next }; gsub("^/(usr/)?", "", so); print so }' \
