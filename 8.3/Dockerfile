@@ -20,10 +20,14 @@ RUN set -eux; \
     libwebp-dev \
     libxpm-dev \
     libzip-dev \
+    git \
   ; \
+  # Until Next version of Imagick is released, 8.3+ needs manual building
+  git clone https://github.com/Imagick/imagick.git  /tmp/imagick ;\
+  yes ' ' | pecl install /tmp/imagick/package.xml ; \
+  rm -rf /tmp/imagick ; \
   yes ' ' | pecl install \
-    imagick \
-    memcached \
+    memcached-3.3.0 \
   ; \
   docker-php-ext-configure gd \
     --with-freetype \

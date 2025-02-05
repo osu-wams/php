@@ -22,8 +22,8 @@ RUN set -eux; \
     libzip-dev \
   ; \
   yes ' ' | pecl install \
-    imagick \
-    memcached \
+    imagick-3.7.0 \
+    memcached-3.3.0 \
   ; \
   docker-php-ext-configure gd \
     --with-freetype \
