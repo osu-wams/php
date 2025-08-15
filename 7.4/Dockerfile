@@ -20,6 +20,7 @@ RUN set -eux; \
     libwebp-dev \
     libxpm-dev \
     libzip-dev \
+    git \
   ; \
   yes ' ' | pecl install \
     imagick-3.8.0 \
@@ -74,8 +75,8 @@ RUN { \
       echo 'max_execution_time = 300'; \
       echo 'max_input_vars = 1500'; \
       echo 'memory_limit = 256M';\
-      echo 'post_max_size = 256M'; \
       echo 'output_buffering=4096'; \
+      echo 'post_max_size = 256M'; \
       echo 'upload_max_filesize = 256M'; \
     } > /usr/local/etc/php/conf.d/docker-php-drupal.ini;
 RUN sed -i "s/\/var\/www\/html/\/var\/www\/html\/docroot/" /etc/apache2/sites-available/000-default.conf; \
@@ -133,6 +134,11 @@ RUN set -eux; \
     echo 'highlight ColorColumn ctermbg=0 guibg=lightgrey'; \
     echo 'colorscheme gruvbox'; \
     echo 'let g:skip_defaults_vim = 1'; \
-    } > ~/.vimrc;
+  } > ~/.vimrc; \
+  { \
+    echo '# MySQL/Mariadb Client configuration'; \
+    echo '[client]' ;\
+    echo 'skip-ssl = true' ;\
+  } > ~/.my.cnf;
 WORKDIR /var/www/html
 CMD [ "apache2-foreground" ]
