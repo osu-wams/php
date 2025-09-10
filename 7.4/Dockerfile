@@ -91,6 +91,7 @@ RUN set -eux; \
   apt-get update; \
   apt-get upgrade -y; \
   apt-get install -y \
+    bash-completion \
     iproute2 \
     iputils-ping \
     nano \
@@ -134,11 +135,12 @@ RUN set -eux; \
     echo 'highlight ColorColumn ctermbg=0 guibg=lightgrey'; \
     echo 'colorscheme gruvbox'; \
     echo 'let g:skip_defaults_vim = 1'; \
-  } > ~/.vimrc; \
+  } > ${HOME}/.vimrc; \
   { \
     echo '# MySQL/Mariadb Client configuration'; \
     echo '[client]' ;\
     echo 'skip-ssl = true' ;\
-  } > ~/.my.cnf;
+  } > ${HOME}/.my.cnf; \
+  cp /etc/skel/.bashrc ${HOME}/;
 WORKDIR /var/www/html
 CMD [ "apache2-foreground" ]
