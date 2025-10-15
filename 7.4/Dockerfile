@@ -9,6 +9,7 @@ RUN set -eux; \
   apt-get upgrade -y; \
   # Installing Just Build dependencies
   apt-get install -y --no-install-recommends \
+    git \
     libfreetype6-dev \
     libicu-dev \
     libjpeg-dev \
@@ -20,7 +21,6 @@ RUN set -eux; \
     libwebp-dev \
     libxpm-dev \
     libzip-dev \
-    git \
   ; \
   yes ' ' | pecl install \
     imagick-3.8.0 \

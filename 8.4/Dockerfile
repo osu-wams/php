@@ -9,6 +9,8 @@ RUN set -eux; \
   apt-get upgrade -y; \
   # Installing Just Build dependencies
   apt-get install -y --no-install-recommends \
+    git \
+    libavif-dev \
     libfreetype6-dev \
     libicu-dev \
     libjpeg-dev \
@@ -20,13 +22,13 @@ RUN set -eux; \
     libwebp-dev \
     libxpm-dev \
     libzip-dev \
-    git \
   ; \
   yes ' ' | pecl install \
     imagick-3.8.0 \
     memcached-3.3.0 \
   ; \
   docker-php-ext-configure gd \
+    --with-avif \
     --with-freetype \
     --with-jpeg \
     --with-webp \
