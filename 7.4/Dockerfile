@@ -2,7 +2,7 @@ FROM docker.io/library/php:7.4-apache AS production
 USER root
 RUN set -eux; \
     if command -v a2enmod; then \
-    a2enmod rewrite event; \
+    a2enmod rewrite expires; \
     fi; \
     savedAptMark="$(apt-mark showmanual)"; \
     apt-get update; \
@@ -23,8 +23,8 @@ RUN set -eux; \
     libzip-dev \
     ; \
     yes ' ' | pecl install \
-    imagick-3.8.0 \
-    memcached-3.3.0 \
+    imagick-3.8.1 \
+    memcached-3.4.0 \
     ; \
     docker-php-ext-configure gd \
     --with-freetype \
