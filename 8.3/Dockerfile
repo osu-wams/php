@@ -42,7 +42,6 @@ RUN set -eux; \
     exif \
     gd \
     intl \
-    opcache \
     pdo_mysql \
     pdo_pgsql \
     tidy \
