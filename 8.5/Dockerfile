@@ -55,6 +55,7 @@ RUN set -eux; \
     imagemagick \
     mariadb-client \
     unzip \
+    vim \
     ; \
     ldd "$(php -r 'echo ini_get("extension_dir");')"/*.so \
     | awk '/=>/ { so = $(NF-1); if (index(so, "/usr/local/") == 1) { next }; gsub("^/(usr/)?", "", so); print so }' \
@@ -70,6 +71,9 @@ COPY conf.d/docker-php.ini /usr/local/etc/php/conf.d/docker-php.ini
 RUN sed -i "s/\/var\/www\/html/\/var\/www\/html\/docroot/" /etc/apache2/sites-available/000-default.conf; \
     chown www-data:www-data /var/www;
 COPY --from=docker.io/library/composer /usr/bin/composer /usr/bin/composer
+ADD --chown=www-data:www-data https://github.com/gruvbox-community/gruvbox.git /var/www/.vim/pack/default/start/gruvbox
+COPY --chown=www-data:www-data vimrc /var/www/.vimrc
+COPY --chown=www-data:www-data my.cnf /var/www/.my.cnf
 WORKDIR /var/www/html
 CMD [ "apache2-foreground" ]
 
@@ -84,7 +88,6 @@ RUN set -eux; \
     iputils-ping \
     nano \
     net-tools \
-    vim \
     wget \
     ; \
     yes ' ' | pecl install xdebug; \
@@ -92,14 +95,9 @@ RUN set -eux; \
     apt-get clean;
 COPY conf.d/opcache-recommended-development.ini /usr/local/etc/php/conf.d/opcache-recommended.ini
 COPY conf.d/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
-RUN \
-    wget https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 -O /usr/local/bin/mhsendmail; \
-    chmod a+x /usr/local/bin/mhsendmail;
+ADD --chmod=+rx https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 /usr/local/bin/mhsendmail
 USER www-data
 RUN set -eux; \
-    git clone https://github.com/gruvbox-community/gruvbox.git ~/.vim/pack/default/start/gruvbox ; \
     cp /etc/skel/.bashrc ${HOME}/;
-COPY --chown=www-data:www-data vimrc /var/www/.vimrc
-COPY --chown=www-data:www-data my.cnf /var/www/.my.cnf
 WORKDIR /var/www/html
 CMD [ "apache2-foreground" ]
