@@ -26,6 +26,7 @@ RUN set -eux; \
     yes ' ' | pecl install \
     imagick-3.8.1 \
     memcached-3.4.0 \
+    redis-6.3.0 \
     ; \
     docker-php-ext-configure gd \
     --with-avif \
@@ -37,6 +38,7 @@ RUN set -eux; \
     docker-php-ext-enable \
     imagick \
     memcached \
+    redis \
     ; \
     docker-php-ext-install -j "$(nproc)" \
     exif \
