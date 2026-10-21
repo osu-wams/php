@@ -23,11 +23,12 @@ RUN set -eux; \
     libxpm-dev \
     libzip-dev \
     ; \
-    yes ' ' | pecl install \
-    imagick-3.8.1 \
-    memcached-3.4.0 \
-    redis-6.3.0 \
-    ; \
+    yes ' ' | pecl install imagick-3.8.1 ; \
+    test -s "$(php-config --extension-dir)/imagick.so" ; \
+    yes ' ' | pecl install memcached-3.4.0 ; \
+    test -s "$(php-config --extension-dir)/memcached.so" ; \
+    yes ' ' | pecl install redis-6.3.0 ; \
+    test -s "$(php-config --extension-dir)/redis.so" ; \
     docker-php-ext-configure gd \
     --with-avif \
     --with-freetype \
